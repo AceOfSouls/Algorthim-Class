@@ -3,25 +3,30 @@
 #include "gf2d_sprite.h"
 #include "simple_logger.h"
 
+
 typedef struct
 {
     int width;
 }Brick;
 
+#include "pqueue.c"
+
 void draw_stack(Sprite *brick,Vector2D start,Brick *bricklist,unsigned int count)
 {
-    unsigned int i,j;
+    unsigned int i,j,v;
     int brickheight = 32;
     int brickwidth = 32;
     Vector2D drawPosition;
     if (!brick)return;
     if (!bricklist)return;
+	initQueue(bricklist, count);
     for (i = 0; i < count; i++)
     {
         //vertical draw
-        drawPosition.x = start.x - ((bricklist[i].width * brickwidth)/2);
+		v = dequeue();
+        drawPosition.x = start.x - ((v * brickwidth)/2);
         drawPosition.y = start.y - ((i + 1) * brickheight);
-        for (j = 0;j < bricklist[i].width;j++)
+        for (j = 0;j < v;j++)
         {
             //horizontal draw
             drawPosition.x += brickwidth;
