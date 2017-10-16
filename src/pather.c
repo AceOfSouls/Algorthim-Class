@@ -1,4 +1,5 @@
 #include "pather.h"
+#include "tilemap.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -47,7 +48,7 @@ void findPath(Pather *path, Vector2D parent)
 	Vector2D nextParent;
 	Vector2D drawPath[2];
 	Vector2D tile[4];
-	int x, tilechecker, clearToAdd;
+	int x, tilechecker, clearToAdd, f;
 	if (elements == 0)
 	{
 		inlist[0] = parent;
@@ -93,8 +94,20 @@ void findPath(Pather *path, Vector2D parent)
 	}
 
 	//need to remove parent from inlist and sort the list.
+	for (x = 0; x < elements; x++)
+	{
+		if (inlist[x].x == parent.x && inlist[x].y == parent.y)
+		{
+			elements--;
+			for (f = x; x <= elements; f++)
+			{
+				inlist[f] = inlist[f + 1];
+			}
+		}
+	}
+	
+	nextParent = inlist[elements-1];
 
-	nextParent = inlist[elements];
 	if (nextParent.x == path->end.x && nextParent.y == path->end.y)
 	{
 		reachedEnd = 1;

@@ -17,6 +17,7 @@ int main(int argc, char * argv[])
     float mf = 0;
     Sprite *mouse;
     TileMap *map;
+	Pather *pathAlgo;
     Vector4D mouseColor = {0,0,255,200};
     static Vector2D path[2];
    
@@ -43,6 +44,9 @@ int main(int argc, char * argv[])
     map = tilemap_load("levels/tilemap.map");
     vector2d_copy(path[0],map->start);
     vector2d_copy(path[1],map->end);
+	pathAlgo->map = map;
+	pathAlgo->start = path[0];
+	pathAlgo->end = path[1];
     /*main game loop*/
     while(!done)
     {
@@ -59,7 +63,8 @@ int main(int argc, char * argv[])
             gf2d_sprite_draw_image(sprite,vector2d(0,0));
                         
             tilemap_draw(map,vector2d(86,24));
-            tilemap_draw_path(path,2, map,vector2d(86,24));
+            //tilemap_draw_path(path,2, map,vector2d(86,24));
+			findPath(pathAlgo, pathAlgo->start);
             //UI elements last
             gf2d_sprite_draw(
                 mouse,
