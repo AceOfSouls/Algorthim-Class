@@ -3,7 +3,11 @@
 // To find a path we need the map, a starting position and the goal/ending position.
 typedef struct
 {
-	TileMap map;
+	TileMap *map;
 	Vector2D start;
 	Vector2D end;
-}pather;
+}Pather;
+
+void checkArray(int length, Vector2D list[], int *size);
+int checkTile(Vector2D tile, Pather *path);
+void findPath(Pather *path, Vector2D parent);
