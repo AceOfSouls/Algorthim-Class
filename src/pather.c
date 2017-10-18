@@ -5,13 +5,6 @@
 #include <stdlib.h>
 
 
-int inListSize = 10;
-int outListSize = 10;
-int elements = 0;
-int outsize = 0;
-int reachedEnd = 0;
-Vector2D inlist[10], outlist[10];
-
 //init Pather
 Pather *initPather(TileMap *map)
 {
@@ -31,30 +24,38 @@ Pather *initPather(TileMap *map)
 	path->map = map;
 	path->start = map->start;
 	path->end = map->end;
+	path->inListSize = 10;
+	path->outListSize = 10;
+	path->elements = 0;
+	path->outsize = 0;
+	path->reachedEnd = 0;
+
 	return path;
 }
 
 
 //check the array in case more elements need to be added. Length = # of elements, size = size of array 
-void makeInlistLarger(int length, int size)
+void makeInlistLarger(int length, int size, Pather *path)
 {
 	if (length - 1 >= size)
 	{
-		Vector2D *outlist = realloc(outlist, size * sizeof *outlist);
+		Vector2D *inlist = realloc(path->inlist, size * sizeof *(path->inlist));
 		size *= size;
-		inListSize = size;
+		*(path->inlist) = *inlist;
+		path->inListSize = size;
 	}
 	else
 		return;
 }
 
-void makeOutlistLarger(int length, int size)
+void makeOutlistLarger(int length, int size, Pather *path)
 {
 	if (length - 1 >= size)
 	{
-		Vector2D *inlist = realloc(inlist, length * sizeof *inlist);
+		Vector2D *outlist = realloc(path->outlist, length * sizeof *(path->outlist));
 		size *= size;
-		outListSize = size;
+		*(path->outlist) = *outlist;
+		path->outListSize = size;
 	}
 	else
 		return;
@@ -90,14 +91,14 @@ void findPath(Pather *path, Vector2D parent)
 	int x, tilechecker, clearToAdd, f;
 
 
-	if (elements == 0)
+	if (path->elements == 0)
 	{
-		inlist[0] = parent;
-		elements++;
+		path->inlist[0] = parent;
+		path->elements++;
 	}
-	makeOutlistLarger(outsize, outListSize);
-	vector2d_copy(outlist[outsize], parent);
-	outsize++;
+	makeOutlistLarger(path->outsize, path->outListSize, path);
+	vector2d_copy(path->outlist[path->outsize], parent);
+	path->outsize++;
 	vector2d_copy(tile[0], parent);
 	vector2d_copy(tile[1], parent);
 	vector2d_copy(tile[2], parent);
@@ -111,16 +112,16 @@ void findPath(Pather *path, Vector2D parent)
 		clearToAdd = 1;
 		if (checkTile(tile[tilechecker], path) == 0)
 		{
-			for (x = 0; x < elements; x++)
+			for (x = 0; x < path->elements; x++)
 			{
-				if (tile[tilechecker].x == inlist[x].x && tile[tilechecker].y == inlist[x].y) //add only if its not already in the inlist
+				if (tile[tilechecker].x == path->inlist[x].x && tile[tilechecker].y == path->inlist[x].y) //add only if its not already in the inlist
 				{
 					clearToAdd = 0;
 				}
 			}
-			for (x = 0; x < outsize; x++)
+			for (x = 0; x < path->outsize; x++)
 			{
-				if (tile[tilechecker].x == outlist[x].x && tile[tilechecker].y == outlist[x].y) //add only if its not already in the outlist
+				if (tile[tilechecker].x == path->outlist[x].x && tile[tilechecker].y == path->outlist[x].y) //add only if its not already in the outlist
 				{
 					clearToAdd = 0;
 				}
@@ -128,37 +129,37 @@ void findPath(Pather *path, Vector2D parent)
 		}
 		if (clearToAdd == 1)
 		{
-			makeInlistLarger(elements, inListSize);
-			vector2d_copy(inlist[elements], tile[tilechecker]);
-			elements++;
+			makeInlistLarger(path->elements, path->inListSize, path);
+			vector2d_copy(path->inlist[path->elements], tile[tilechecker]);
+			path->elements++;
 		}
 	}
 
 	//need to remove parent from inlist and sort the list.
-	for (x = 0; x < elements; x++)
+	for (x = 0; x < path->elements; x++)
 	{
-		if (inlist[x].x == parent.x && inlist[x].y == parent.y)
+		if (path->inlist[x].x == parent.x && path->inlist[x].y == parent.y)
 		{
-			elements--;
-			for (f = x; x <= elements; f++)
+			path->elements--;
+			for (f = x; x <= path->elements; f++)
 			{
-				inlist[f] = inlist[f + 1];
+				path->inlist[f] = path->inlist[f + 1];
 			}
 		}
 	}
 	
-	nextParent = inlist[elements-1];
+	nextParent = path->inlist[path->elements-1];
 
 	if (nextParent.x == path->end.x && nextParent.y == path->end.y)
 	{
-		reachedEnd = 1;
+		path->reachedEnd = 1;
 	}
 	else
 	{
 		findPath(path, nextParent);
 	}
 
-	if (reachedEnd == 1)
+	if (path->reachedEnd == 1)
 	{
 		vector2d_copy(drawPath[0], parent); 
 		vector2d_copy(drawPath[1], nextParent);

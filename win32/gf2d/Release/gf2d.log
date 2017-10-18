@@ -1,0 +1,12 @@
+﻿  game.c
+..\..\src\game.c(59): warning C4305: '+=': truncation from 'double' to 'float'
+  pather.c
+..\..\src\pather.c(67): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+..\..\src\pather.c(68): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Generating code
+  5 of 43 functions (11.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  gf2d.vcxproj -> C:\Users\Sergio\Documents\IT homework\Algorithims\PathFinding\win32\gf2d\..\..\gf2d.exe
+  gf2d.vcxproj -> ..\..\gf2d.pdb (Full PDB)

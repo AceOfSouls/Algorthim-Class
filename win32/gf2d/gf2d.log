@@ -1,0 +1,18 @@
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\game.c:26: ---==== BEGIN ====---
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_graphics.c:131: graphics initialized
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_sprite.c:43: sprite system initialized
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_sprite.c:144: failed to load sprite image images/backgrounds/bg_flat.png
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_sprite.c:144: failed to load sprite image images/pointer.png
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\tilemap.c:18: failed to open file levels/tilemap.map
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\game.c:46: Map not loaded.
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_sprite.c:26: sprite system closed
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_graphics.c:162: graphics closed
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\game.c:26: ---==== BEGIN ====---
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_graphics.c:131: graphics initialized
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_sprite.c:43: sprite system initialized
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_sprite.c:144: failed to load sprite image images/backgrounds/bg_flat.png
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_sprite.c:144: failed to load sprite image images/pointer.png
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\tilemap.c:18: failed to open file levels/tilemap.map
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\game.c:46: Map not loaded.
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_sprite.c:26: sprite system closed
+c:\users\sergio\documents\it homework\algorithims\pathfinding\src\gf2d_graphics.c:162: graphics closed

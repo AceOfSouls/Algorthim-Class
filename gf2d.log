@@ -1,0 +1,14 @@
+..\..\src\game.c:26: ---==== BEGIN ====---
+..\..\src\gf2d_graphics.c:131: graphics initialized
+..\..\src\gf2d_sprite.c:43: sprite system initialized
+..\..\src\tilemap.c:18: failed to open file levels/tilemap.map
+..\..\src\game.c:46: Map not loaded.
+..\..\src\gf2d_sprite.c:26: sprite system closed
+..\..\src\gf2d_graphics.c:162: graphics closed
+..\..\src\game.c:26: ---==== BEGIN ====---
+..\..\src\gf2d_graphics.c:131: graphics initialized
+..\..\src\gf2d_sprite.c:43: sprite system initialized
+..\..\src\tilemap.c:18: failed to open file levels/tilemap.map
+..\..\src\game.c:46: Map not loaded.
+..\..\src\gf2d_sprite.c:26: sprite system closed
+..\..\src\gf2d_graphics.c:162: graphics closed
