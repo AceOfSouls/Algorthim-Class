@@ -40,13 +40,15 @@ int main(int argc, char * argv[])
 
     sprite = gf2d_sprite_load_image("images/backgrounds/bg_flat.png");
     mouse = gf2d_sprite_load_all("images/pointer.png",32,32,16);
-    
-    map = tilemap_load("levels/tilemap.map");
+	map = tilemap_load("levels/tilemap.map");
+	if (!map)
+	{
+		slog("Map not loaded.");
+		exit(1);
+	}
     vector2d_copy(path[0],map->start);
     vector2d_copy(path[1],map->end);
-	pathAlgo->map = map;
-	pathAlgo->start = path[0];
-	pathAlgo->end = path[1];
+	pathAlgo = initPather(map);
     /*main game loop*/
     while(!done)
     {

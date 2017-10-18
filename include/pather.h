@@ -4,10 +4,11 @@
 typedef struct
 {
 	TileMap *map;
-	Vector2D start;
-	Vector2D end;
+	Vector2D start, end;
 }Pather;
 
-void checkArray(int length, Vector2D list[], int *size);
+Pather *initPather(TileMap *map);
+void makeInlistLarger(int length, int size);
+void makeOutlistLarger(int length, int size);
 int checkTile(Vector2D tile, Pather *path);
 void findPath(Pather *path, Vector2D parent);

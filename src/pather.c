@@ -1,5 +1,6 @@
 #include "pather.h"
 #include "tilemap.h"
+#include "simple_logger.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -11,13 +12,49 @@ int outsize = 0;
 int reachedEnd = 0;
 Vector2D inlist[10], outlist[10];
 
+//init Pather
+Pather *initPather(TileMap *map)
+{
+	Pather *path;
+	if (!map)
+	{
+		slog("Map not loaded.");
+		exit(1);
+	}
+	path = (Pather *)malloc(sizeof(Pather));
+	if (!path)
+	{
+		slog("failed to allocate pather data");
+		return NULL;
+	}
+	memset(path, 0, sizeof(Pather));
+	path->map = map;
+	path->start = map->start;
+	path->end = map->end;
+	return path;
+}
+
+
 //check the array in case more elements need to be added. Length = # of elements, size = size of array 
-void checkArray(int length, Vector2D list[], int *size)
+void makeInlistLarger(int length, int size)
 {
 	if (length - 1 >= size)
 	{
-		int* list = realloc(list, length * sizeof *list);
-		*size *= *size;
+		Vector2D *outlist = realloc(outlist, size * sizeof *outlist);
+		size *= size;
+		inListSize = size;
+	}
+	else
+		return;
+}
+
+void makeOutlistLarger(int length, int size)
+{
+	if (length - 1 >= size)
+	{
+		Vector2D *inlist = realloc(inlist, length * sizeof *inlist);
+		size *= size;
+		outListSize = size;
 	}
 	else
 		return;
@@ -28,11 +65,13 @@ int checkTile(Vector2D tile, Pather *path)
 {
 	int x = tile.x;
 	int y = tile.y;
-	if (x < 0 || y < 0 || x > path->map->width || y > path->map->height) //make sure its within the map
+	int width = path->map->width;
+	int height = path->map->height;
+	if (x < 0 || y < 0 || x > width || y > height) //make sure its within the map
 	{
 		return 1;
 	}
-	if ((path->map->map[(y * path->map->width) + x] + '0') == 1) //check it the tile is a wall
+	if ((path->map->map[(y * width) + x] + '0') == 1) //check it the tile is a wall
 	{
 		return 1;
 	}
@@ -49,13 +88,15 @@ void findPath(Pather *path, Vector2D parent)
 	Vector2D drawPath[2];
 	Vector2D tile[4];
 	int x, tilechecker, clearToAdd, f;
+
+
 	if (elements == 0)
 	{
 		inlist[0] = parent;
 		elements++;
 	}
-	checkArray(outsize, outlist, outListSize);
-	outlist[outsize] = parent;
+	makeOutlistLarger(outsize, outListSize);
+	vector2d_copy(outlist[outsize], parent);
 	outsize++;
 	vector2d_copy(tile[0], parent);
 	vector2d_copy(tile[1], parent);
@@ -87,8 +128,8 @@ void findPath(Pather *path, Vector2D parent)
 		}
 		if (clearToAdd == 1)
 		{
-			checkArray(elements, inlist, inListSize);
-			inlist[elements] = tile[tilechecker];
+			makeInlistLarger(elements, inListSize);
+			vector2d_copy(inlist[elements], tile[tilechecker]);
 			elements++;
 		}
 	}
@@ -119,8 +160,8 @@ void findPath(Pather *path, Vector2D parent)
 
 	if (reachedEnd == 1)
 	{
-		drawPath[0] = parent;
-		drawPath[1] = nextParent;
+		vector2d_copy(drawPath[0], parent); 
+		vector2d_copy(drawPath[1], nextParent);
 		tilemap_draw_path(drawPath, 2, path->map, vector2d(86, 24));
 	}
 }
