@@ -5,6 +5,7 @@
 #include "simple_logger.h"
 #include "gf2d_draw.h"
 #include "gf2d_collision.h"
+#include "hash.h"
 
 int main(int argc, char * argv[])
 {
@@ -51,6 +52,7 @@ int main(int argc, char * argv[])
 	shape[1] = gf2d_shape_circle(20,0, 25);
 	shape[2] = gf2d_shape_rect(-32,-32,64,64);
 	shape[3] = gf2d_shape_rect(-16,-16, 32,32);
+
 
 //	gf2d_space_add_static_shape(space,gf2d_shape_rect(200,500, 512,32));
 	/* Stress test*/

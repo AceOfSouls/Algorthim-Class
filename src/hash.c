@@ -1,24 +1,10 @@
 #include <stdlib.h>
+#include <SDL.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
 #include "simple_logger.h"
-
-struct entry_s {
-	char *key;
-	char *data;
-	struct entry_s *next;
-};
-
-typedef struct entry_s entry_t;
-
-struct hashmap_s {
-	int size;
-	struct entry_s **map;
-	int count;
-};
-
-typedef struct hashmap_s hashmap_t;
+#include "hash.h"
 
 hashmap_t *hm_create(int size)
 {
